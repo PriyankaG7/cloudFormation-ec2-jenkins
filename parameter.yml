@@ -1,0 +1,5 @@
+- ParameterKey: InstanceType
+  ParameterValue: t2.micro
+
+- ParameterKey: KeyName
+  ParameterValue: devops

@@ -1,0 +1,18 @@
+pipeline {
+  agent any
+
+  environment {
+    STACK_NAME = 'MyWebServerStack'
+  }
+
+  stages {
+    stage('Destroy CloudFormation Stack') {
+      steps {
+        sh 'aws cloudformation delete-stack --stack-name MyWebServerStack'
+        echo "Waiting for stack deletion to complete..."
+        sh 'aws cloudformation wait stack-delete-complete --stack-name MyWebServerStack'
+        echo "Stack deleted successfully."
+      }
+    }
+  }
+}
