@@ -7,13 +7,30 @@ pipeline {
   }
 
   stages {
+    stage('Authenticate with AWS') {
+      steps {
+        withCredentials([
+          usernamePassword(
+            credentialsId: 'aws-credentials',
+            usernameVariable: 'AWS_ACCESS_KEY_ID',
+            passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+          )
+        ]) {
+          sh '''
+            aws sts get-caller-identity
+            aws s3 ls
+          '''
+        }
+      }
+    }
+
     stage('Checkout') {
       steps {
         git 'https://github.com/PriyankaG7/cloudFormation-ec2-jenkins.git'
       }
     }
 
-    stage('Upload Nested Template') {
+    stage('Upload CloudFormation Template') {
       steps {
         sh 'aws s3 cp ec2.yml s3://my-cloudformationtemplate-bucket7/ec2.yml'
       }
