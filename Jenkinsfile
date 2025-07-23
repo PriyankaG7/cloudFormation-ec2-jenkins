@@ -23,15 +23,10 @@ pipeline {
         }
       }
     }
-    stage('Test Git Clone') {
-      steps {
-        sh 'git clone https://github.com/PriyankaG7/cloudFormation-ec2-jenkins.git'
-      }
-    }
 
     stage('Checkout') {
       steps {
-        git 'https://github.com/PriyankaG7/cloudFormation-ec2-jenkins.git'
+        git url: 'https://github.com/PriyankaG7/cloudFormation-ec2-jenkins.git', branch: 'main'
       }
     }
 
